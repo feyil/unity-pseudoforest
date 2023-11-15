@@ -1,12 +1,15 @@
+using _game.Scripts.ControlSystem;
 using _game.Scripts.Core.Ui;
-using _game.Scripts.Ui.Controllers;
 using _game.Scripts.Utility;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace _game.Scripts.Core
 {
     public class GameManager : MonoSingleton<GameManager>
     {
+        [SerializeField] private ControlManager m_controlManager;
+        
         private void Awake()
         {
             InitializeAwake();
@@ -30,7 +33,7 @@ namespace _game.Scripts.Core
         [Button]
         private void StartGame()
         {
-            UiManager.Get<GameUiController>().Show();
+            m_controlManager.Initialize();
         }
     }
 }
