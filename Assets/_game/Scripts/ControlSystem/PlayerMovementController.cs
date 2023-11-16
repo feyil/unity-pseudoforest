@@ -5,12 +5,12 @@ namespace _game.Scripts.ControlSystem
 {
     public class PlayerMovementController
     {
+        private event Action<Vector3> OnPlayerPositionUpdate;
+
         private readonly Transform _player;
         private readonly Transform _orientation;
 
         private readonly float _moveSpeed;
-
-        private event Action<Vector3> OnPlayerPositionUpdate;
 
         public PlayerMovementController(Transform player, Transform orientation, float moveSpeed)
         {

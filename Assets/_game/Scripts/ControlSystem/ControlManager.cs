@@ -1,4 +1,3 @@
-using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -54,6 +53,11 @@ namespace _game.Scripts.ControlSystem
         public PlayerMovementController GetPlayerMovementController()
         {
             return _playerMovementController;
+        }
+
+        public PlayerCameraController GetPlayerCameraController()
+        {
+            return _playerCameraController;
         }
     }
 }

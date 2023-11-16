@@ -1,5 +1,3 @@
-using System;
-using _game.Scripts.ControlSystem;
 using _game.Scripts.Core;
 using UnityEngine;
 
@@ -20,9 +18,14 @@ namespace _game.Scripts
         private void Start()
         {
             var controlManager = GameManager.Instance.GetControlManager();
+            
             var playerMovementController = controlManager.GetPlayerMovementController();
             playerMovementController.AddListenerToPlayerPositionUpdate(OnPlayerPositionUpdate);
+
+            var playerCameraController = controlManager.GetPlayerCameraController();
+            playerCameraController.AddListenerToOnOrientationUpdate(OnOrientationUpdate);
             
+
             Test(0, 0);
             Test(0, 10);
             Test(0, 20);
@@ -32,7 +35,24 @@ namespace _game.Scripts
             Test(0, -20);
             Test(0, -30);
             Test(0, -40);
-            
+        }
+
+        private void OnOrientationUpdate(Transform playerOrientation)
+        {
+            for (var i = 0; i < transform.childCount; i++)
+            {
+                var child = transform.GetChild(i);
+
+                var localPoint = playerOrientation.InverseTransformPoint(child.position);
+                var isInRectangle = IsPointInsideRectangle(-40, 40, 40, -10, localPoint.x, localPoint.z);
+                
+                child.gameObject.SetActive(isInRectangle);
+            }
+        }
+
+        bool IsPointInsideRectangle(float x1, float y1, float x2, float y2, float px, float py)
+        {
+            return px >= x1 && px <= x2 && py <= y1 && py >= y2;
         }
 
         private void OnPlayerPositionUpdate(Vector3 position)
@@ -76,14 +96,14 @@ namespace _game.Scripts
                 Test(0, -40);
             }
         }
-        
+
         private void OnGridUpdate()
         {
             for (var i = 0; i < transform.childCount; i++)
             {
                 Destroy(transform.GetChild(i).gameObject);
             }
-            
+
             Test(0, 0);
             Test(0, 10);
             Test(0, 20);
@@ -117,19 +137,18 @@ namespace _game.Scripts
 
             var envPos7 = new Vector3(_gridX - 30 + offsetX, 0, _gridZ + 5 + offsetZ);
             Instantiate(m_sectionPrefab, envPos7, Quaternion.identity, transform);
-            
+
             var envPos8 = new Vector3(_gridX - 40 + offsetX, 0, _gridZ + 5 + offsetZ);
             Instantiate(m_sectionPrefab, envPos8, Quaternion.identity, transform);
-            
+
             var envPos9 = new Vector3(_gridX - 50 + offsetX, 0, _gridZ + 5 + offsetZ);
             Instantiate(m_sectionPrefab, envPos9, Quaternion.identity, transform);
-            
+
             var envPos10 = new Vector3(_gridX + 40 + offsetX, 0, _gridZ + 5 + offsetZ);
             Instantiate(m_sectionPrefab, envPos10, Quaternion.identity, transform);
-            
+
             var envPos11 = new Vector3(_gridX + 50 + offsetX, 0, _gridZ + 5 + offsetZ);
             Instantiate(m_sectionPrefab, envPos11, Quaternion.identity, transform);
-
         }
     }
 }

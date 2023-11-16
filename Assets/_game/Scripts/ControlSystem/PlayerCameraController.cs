@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 namespace _game.Scripts.ControlSystem
 {
     public class PlayerCameraController
     {
+        private event Action<Transform> OnOrientationUpdate;
+
         private readonly Transform _camera;
         private readonly Transform _orientation;
         private readonly Vector2 _sensitivity;
@@ -32,7 +35,19 @@ namespace _game.Scripts.ControlSystem
             _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
 
             _camera.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
+
             _orientation.rotation = Quaternion.Euler(0, _yRotation, 0);
+            OnOrientationUpdate?.Invoke(_orientation);
+        }
+
+        public void AddListenerToOnOrientationUpdate(Action<Transform> listener)
+        {
+            OnOrientationUpdate += listener;
+        }
+
+        public void RemoveListenerToOnOrientationUpdate(Action<Transform> listener)
+        {
+            OnOrientationUpdate -= listener;
         }
     }
 }
