@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _game.Scripts.ControlSystem
@@ -9,6 +10,8 @@ namespace _game.Scripts.ControlSystem
 
         private readonly float _moveSpeed;
 
+        private event Action<Vector3> OnPlayerPositionUpdate;
+
         public PlayerMovementController(Transform player, Transform orientation, float moveSpeed)
         {
             _player = player;
@@ -19,7 +22,19 @@ namespace _game.Scripts.ControlSystem
         public void Update(float horizontalInput, float verticalInput, float deltaTime)
         {
             var moveDirection = _orientation.forward * verticalInput + _orientation.right * horizontalInput;
-            _player.position += moveDirection * (_moveSpeed * deltaTime);
+            var updatedPosition = _player.position + moveDirection * (_moveSpeed * deltaTime);
+            _player.position = updatedPosition;
+            OnPlayerPositionUpdate?.Invoke(updatedPosition);
+        }
+
+        public void AddListenerToPlayerPositionUpdate(Action<Vector3> listener)
+        {
+            OnPlayerPositionUpdate += listener;
+        }
+
+        public void RemoveListenerToPlayerPositionUpdate(Action<Vector3> listener)
+        {
+            OnPlayerPositionUpdate -= listener;
         }
     }
 }

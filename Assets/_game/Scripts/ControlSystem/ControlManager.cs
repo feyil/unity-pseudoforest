@@ -50,5 +50,10 @@ namespace _game.Scripts.ControlSystem
             // Sync cam position with the target
             m_cameraHolder.position = m_cameraTarget.position;
         }
+
+        public PlayerMovementController GetPlayerMovementController()
+        {
+            return _playerMovementController;
+        }
     }
 }

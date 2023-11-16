@@ -23,6 +23,7 @@ namespace _game.Scripts.Core
         private void InitializeAwake()
         {
             UiManager.Instance.Initialize();
+            m_controlManager.Initialize();
         }
 
         private void InitializeStart()
@@ -33,7 +34,12 @@ namespace _game.Scripts.Core
         [Button]
         private void StartGame()
         {
-            m_controlManager.Initialize();
+            
+        }
+
+        public ControlManager GetControlManager()
+        {
+            return m_controlManager;
         }
     }
 }
