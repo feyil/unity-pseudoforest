@@ -9,7 +9,8 @@ namespace _game.Scripts.Core
     public class GameManager : MonoSingleton<GameManager>
     {
         [SerializeField] private ControlManager m_controlManager;
-        
+        [SerializeField] private WorldStreamer m_worldStreamer;
+
         private void Awake()
         {
             InitializeAwake();
@@ -30,11 +31,11 @@ namespace _game.Scripts.Core
         {
             StartGame();
         }
-        
+
         [Button]
         private void StartGame()
         {
-            
+            m_worldStreamer.Initialize();
         }
 
         public ControlManager GetControlManager()
