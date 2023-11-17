@@ -23,6 +23,8 @@ namespace _game.Scripts
         private List<Transform> _envPool;
         private Dictionary<Vector3Int, Transform> _envDict;
 
+        private float _timer;
+
         [Button]
         public void Initialize()
         {

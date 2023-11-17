@@ -28,7 +28,7 @@ namespace _game.Scripts.ControlSystem
         {
             mouseX = mouseX * deltaTime * _sensitivity.x;
             mouseY = mouseY * deltaTime * _sensitivity.y;
-
+            
             _yRotation += mouseX;
             _xRotation -= mouseY;
 
