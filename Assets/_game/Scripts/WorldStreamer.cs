@@ -34,11 +34,7 @@ namespace _game.Scripts
             _envPool = new List<Transform>();
 
             var controlManager = GameManager.Instance.GetControlManager();
-
-            var playerMovementController = controlManager.GetPlayerMovementController();
-            playerMovementController.RemoveListenerToPlayerPositionUpdate(OnPlayerPositionUpdate);
-            playerMovementController.AddListenerToPlayerPositionUpdate(OnPlayerPositionUpdate);
-
+            
             var playerCameraController = controlManager.GetPlayerCameraController();
             playerCameraController.RemoveListenerToOnOrientationUpdate(OnOrientationUpdate);
             playerCameraController.AddListenerToOnOrientationUpdate(OnOrientationUpdate);
@@ -96,11 +92,7 @@ namespace _game.Scripts
                 }
             }
         }
-
-        private void OnPlayerPositionUpdate(Vector3 position)
-        {
-        }
-
+        
         private Vector3Int GetGridPosition(Vector3 worldPosition)
         {
             var remainderX = worldPosition.x % m_sectionSizeXZ.x;
